@@ -14,13 +14,17 @@ executors:
 jobs:
   build:
     parameters:
+      feature:
+        type: string
+        default: bundled
       resource_class:
         type: string
         default: arm.large
     executor: docker
     resource_class: << parameters.resource_class >>
     steps:
-      - run: cargo build --release
+      - checkout
+      - run: cargo build -F << parameters.feature >>
 
 workflows:
   builds:
@@ -29,3 +33,4 @@ workflows:
           matrix:
             parameters:
               resource_class: [large, arm.large]
+              feature: [bundled, from-source]
