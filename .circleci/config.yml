@@ -4,7 +4,6 @@ orbs:
   rust: circleci/rust@1.6.1
 
 executors:
-  docker:
   linux:
     machine:
       image: ubuntu-2204:current
