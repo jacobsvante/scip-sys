@@ -14,7 +14,11 @@ jobs:
       executor:
         type: executor
         default: linux
+      resource_class:
+        type: string
+        default: arm.medium
     executor: << parameters.executor >>
+    resource_class: << parameters.resource_class >>
     steps:
       - checkout
       - run:
@@ -28,3 +32,4 @@ workflows:
           matrix:
             parameters:
               executor: [linux, macos]
+              resource_class: [medium, arm.medium]
