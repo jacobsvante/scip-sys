@@ -1,10 +1,10 @@
 version: 2.1
 
 executors:
-  linux: # a Linux VM running Ubuntu 20.04
+  linux:
     machine:
       image: ubuntu-2204:current
-  macos: # macos executor running Xcode
+  macos:
     macos:
       xcode: 15.2.0
 
@@ -16,7 +16,7 @@ jobs:
         default: linux
       resource_class:
         type: string
-        default: arm.medium
+        default: arm.large
     executor: << parameters.executor >>
     resource_class: << parameters.resource_class >>
     steps:
@@ -28,8 +28,13 @@ jobs:
 workflows:
   builds:
     jobs:
-      - build:
+      - build-linux:
           matrix:
             parameters:
-              executor: [linux, macos]
-              resource_class: [medium, arm.medium]
+              executor: [linux]
+              resource_class: [large, arm.large]
+      - build-macos:
+          matrix:
+            parameters:
+              executor: [macos]
+              resource_class: [macos.m1.medium.gen1]
