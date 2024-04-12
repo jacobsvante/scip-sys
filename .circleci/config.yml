@@ -28,12 +28,12 @@ jobs:
 workflows:
   builds:
     jobs:
-      - build-linux:
+      - build:
           matrix:
             parameters:
               executor: [linux]
               resource_class: [large, arm.large]
-      - build-macos:
+      - build:
           matrix:
             parameters:
               executor: [macos]
