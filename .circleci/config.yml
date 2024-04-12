@@ -4,6 +4,9 @@ orbs:
   rust: circleci/rust@1.6.1
 
 executors:
+  docker:
+    docker:
+      - image: cimg/rust:1.77.2
   linux:
     machine:
       image: ubuntu-2204:current
@@ -14,9 +17,7 @@ jobs:
       resource_class:
         type: string
         default: arm.large
-    docker:
-      - image: cimg/rust:1.77.2
-    executor: linux
+    executor: docker
     resource_class: << parameters.resource_class >>
     steps:
       - run: rustc --version
