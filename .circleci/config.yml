@@ -20,7 +20,7 @@ jobs:
     executor: docker
     resource_class: << parameters.resource_class >>
     steps:
-      - run: rustc --version
+      - run: cargo build --release
 
 workflows:
   builds:
