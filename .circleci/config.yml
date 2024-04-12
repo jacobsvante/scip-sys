@@ -22,8 +22,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: Say version
+          command: rustc --version
 
 workflows:
   builds:
