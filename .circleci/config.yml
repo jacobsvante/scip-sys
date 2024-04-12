@@ -22,13 +22,12 @@ jobs:
         default: arm.large
     executor: docker
     resource_class: << parameters.resource_class >>
-    environment:
-      COMP: gnu
     steps:
       - checkout
       - run: |
           sudo apt-get update \
           && sudo apt-get install -y \
+            clang \
             wget \
             cmake \
             g++ \
