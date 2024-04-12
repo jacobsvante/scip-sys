@@ -22,6 +22,8 @@ jobs:
         default: arm.large
     executor: docker
     resource_class: << parameters.resource_class >>
+    environment:
+      COMP: gnu
     steps:
       - checkout
       - run: |
