@@ -24,6 +24,9 @@ jobs:
     resource_class: << parameters.resource_class >>
     steps:
       - checkout
+      - run: |
+          apt-get install -y \
+            build-essentials
       - run: cargo build -F << parameters.feature >>
 
 workflows:
