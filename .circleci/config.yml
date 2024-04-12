@@ -11,9 +11,6 @@ executors:
 jobs:
   build:
     parameters:
-      executor:
-        type: executor
-        default: linux
       resource_class:
         type: string
         default: arm.large
