@@ -24,8 +24,10 @@ jobs:
     resource_class: << parameters.resource_class >>
     steps:
       - checkout
-      - rust/build:
+      - rust/install:
           version: 1.77.1
+      - rust/build:
+          release: true
 
 workflows:
   builds:
