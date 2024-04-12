@@ -30,5 +30,4 @@ workflows:
       - build:
           matrix:
             parameters:
-              executor: [linux]
               resource_class: [large, arm.large]
