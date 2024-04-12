@@ -4,12 +4,10 @@ orbs:
   rust: circleci/rust@1.6.1
 
 executors:
+  docker:
   linux:
     machine:
       image: ubuntu-2204:current
-  macos:
-    macos:
-      xcode: 15.2.0
 
 jobs:
   build:
@@ -20,14 +18,12 @@ jobs:
       resource_class:
         type: string
         default: arm.large
+    docker:
+      - image: cimg/rust:1.77.2
     executor: << parameters.executor >>
     resource_class: << parameters.resource_class >>
     steps:
-      - checkout
-      - rust/install:
-          version: 1.77.1
-      - rust/build:
-          release: true
+      - run: rustc --version
 
 workflows:
   builds:
@@ -37,10 +33,3 @@ workflows:
             parameters:
               executor: [linux]
               resource_class: [large, arm.large]
-      - build:
-          matrix:
-            parameters:
-              executor: [macos]
-              # TODO: Add macos.m1 in May when it becomes free for basic plan
-              # resource_class: [macos.x86.medium.gen2, macos.m1.medium.gen1]
-              resource_class: [macos.x86.medium.gen2]
