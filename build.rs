@@ -64,7 +64,7 @@ fn _build_from_scip_dir(path: &str) -> bindgen::Builder {
     bindgen::Builder::default()
         .header(scip_header_file)
         .header(scipdefplugins_header_file)
-        .parse_callbacks(Box::new(bindgen::CargoCallbacks))
+        .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
         .clang_arg(format!("-I{}", include_dir_path))
 }
 
@@ -129,15 +129,15 @@ fn main() -> Result<(), Box<dyn Error>> {
                 bindgen::Builder::default()
                     .header(scip_header_file)
                     .header(scipdefplugins_header_file)
-                    .parse_callbacks(Box::new(bindgen::CargoCallbacks))
+                    .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
                     .clang_arg(format!("-I{}", headers_dir_path))
             }
         };
 
     #[cfg(windows)]
-    println!("cargo:rustc-link-lib=libscip");
+    println!("cargo:rustc-link-lib:static=libscip");
     #[cfg(not(windows))]
-    println!("cargo:rustc-link-lib=scip");
+    println!("cargo:rustc-link-lib:static=scip");
 
     let builder = builder
         .blocklist_item("FP_NAN")
@@ -145,7 +145,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         .blocklist_item("FP_ZERO")
         .blocklist_item("FP_SUBNORMAL")
         .blocklist_item("FP_NORMAL")
-        .parse_callbacks(Box::new(bindgen::CargoCallbacks));
+        .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()));
 
     let bindings = builder.generate()?;
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
